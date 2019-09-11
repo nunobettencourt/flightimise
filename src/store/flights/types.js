@@ -1,9 +1,29 @@
-export const FLIGHTS_ROOT_URL = 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0';
+// Amadeus Credentials
 
-export const ROOT_URL = 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0';
+export const AMADEUS_API_KEY = 'p2bmlGiF4EYWuxZRaNLv4xINaw7SpUt9';
 
-export const X_RAPID_API_KEY ='aef8b22e68msh5982d141575b330p1777aajsna998dabf0e5d';
+export const AMADEUS_API_SECRET = 'bvMBiSCltzG9g5bZ';
 
-export const CREATE_SESSION = '@@flights/CREATE_SESSION';
+// Amadeus Endpoints
+
+export const AMADEUS_ROOT_URL = 'https://test.api.amadeus.com/v1';
+
+export const AMADEUS_TOKEN_EP = '/security/oauth2/token';
+
+export const AMADEUS_FLIGHT_OFFERS = '/shopping/flight-offers';
+
+
+// Flights Action Types
+
+export const SET_TOKEN = '@@flights/SET_TOKEN';
 
 export const FETCH_FLIGHTS = '@@flights/FETCH_FLIGHTS';
+
+export const SET_ERROR = '@@flights/SET_ERROR';
+
+
+// Skyscanner Types
+
+export const SESSION_ENDPOINT = 'pricing/uk2/v1.0';
+
+export const X_RAPID_API_KEY ='aef8b22e68msh5982d141575b330p1777aajsna998dabf0e5d';

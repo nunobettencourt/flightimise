@@ -2,7 +2,8 @@ import * as types from './types';
 
 const INITIAL_STATE = {
     flightsList: {},
-    session: {}
+    session: '',
+    error: ''
 }
 
 const flightsReducer = (state = INITIAL_STATE, action) => {
@@ -12,10 +13,15 @@ const flightsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 flightsList: action.payload
             }
-        case types.CREATE_SESSION:
+        case types.SET_TOKEN:
             return {
                 ...state,
                 session: action.payload
+            }
+        case types.SET_ERROR:
+            return {
+                ...state,
+                error: action.payload
             }
         default:
             return state;

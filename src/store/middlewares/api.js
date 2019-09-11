@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from '../api/types';
+import { AMADEUS_ROOT_URL } from '../flights/types';
 import { accessDenied, apiError, apiStart, apiEnd } from "../api/actions";
 
 const api = ({ dispatch, getState }) => next => action => {
@@ -19,7 +20,7 @@ const api = ({ dispatch, getState }) => next => action => {
     const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data";
 
     // axios default configs
-    axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "";
+    axios.defaults.baseURL = AMADEUS_ROOT_URL;
 
     if (label) {
         dispatch(apiStart(label));

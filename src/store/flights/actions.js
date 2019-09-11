@@ -1,87 +1,47 @@
-import axios from 'axios';
 import * as types from './types';
 import { apiAction } from '../api/actions';
 
-
-export const create_session_old = (params) => (
-    async function(dispatch) {
-
-        const { headers: {location} } = await axios.post(`${types.FLIGHTS_ROOT_URL}`,
-            params,
-            {
-                headers: {
-                    'X-RapidAPI-Key': types.X_RAPID_API_KEY,
-                    'content-type':'application/x-www-form-urlencoded',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            }
-        );
-
-        const sessionkey = location.split('/').pop();
-
-        dispatch({
-            type: types.CREATE_SESSION,
-            payload: sessionkey
-        })
-
-        const { data } = await axios.get(`${types.ROOT_URL}/${sessionkey}`,
-            {
-                headers: {
-                    'X-RapidAPI-Key': types.X_RAPID_API_KEY,
-                    'content-type':'application/x-www-form-urlencoded',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            }
-        );
-
-        dispatch({
-            type: types.FETCH_FLIGHTS,
-            payload: data
-        })
-    }
-)
-
-
-export const create_session = (params) => (
-
+export const get_amadeus_token = () => (
     apiAction({
-        url: types.FLIGHTS_ROOT_URL,
+        url: types.AMADEUS_TOKEN_EP,
         method: "POST",
-        data: params,
-        onSuccess: fetch_flights,
+        data: `grant_type=client_credentials&client_id=${types.AMADEUS_API_KEY}&client_secret=${types.AMADEUS_API_SECRET}`,
+        onSuccess: set_token,
         onFailure: console.log("Error creating session"),
         headers: {
-            'X-RapidAPI-Key': types.X_RAPID_API_KEY,
-            'content-type':'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': '*'
+            'content-type':'application/x-www-form-urlencoded'
         }
     })
 );
 
-
-export const fetch_flights = ({ headers: {location}})  => (
-    async function(dispatch) {
-
-        const sessionkey = location.split('/').pop();
-
-        const { data } = await axios.get(`${types.ROOT_URL}/${sessionkey}`,
-            {
-                headers: {
-                    'X-RapidAPI-Key': types.X_RAPID_API_KEY,
-                    'content-type':'application/x-www-form-urlencoded',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            }
-        );
-
+export const set_token = ({data: {access_token}})  => (
+    function(dispatch) {
         dispatch({
-            type: types.CREATE_SESSION,
-            payload: sessionkey
+            type: types.SET_TOKEN,
+            payload: access_token
         })
+    }
+)
 
+//WIP
+export const get_flights = (token) => {
+
+    console.log("token: ", token)
+
+    apiAction({
+        url: types.AMADEUS_FLIGHT_OFFERS,
+        method: "GET",
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    })
+}
+
+export const log_errors = (error) => (
+    function(dispatch) {
         dispatch({
-            type: types.FETCH_FLIGHTS,
-            payload: data
+            type: types.SET_ERROR,
+            payload: error
         })
     }
 )
