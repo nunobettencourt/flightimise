@@ -1,8 +1,8 @@
 // Amadeus Credentials
 
-export const AMADEUS_API_KEY = 'p2bmlGiF4EYWuxZRaNLv4xINaw7SpUt9';
+export const AMADEUS_API_KEY = '';
 
-export const AMADEUS_API_SECRET = 'bvMBiSCltzG9g5bZ';
+export const AMADEUS_API_SECRET = '';
 
 // Amadeus Endpoints
 
